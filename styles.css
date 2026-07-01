@@ -49,6 +49,9 @@
     background: var(--bs-secondary-bg, #e9ecef);
     border: 3px solid var(--light, #fff);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    /* Most emoji glyphs render with a slight optical left bias inside a
+       centered flex box; nudging the available space right re-centres them. */
+    padding-inline-start: 0.15em;
 }
 
 .block_playergames .pg-hub-profile-avatar-img {
