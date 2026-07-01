@@ -34,6 +34,16 @@
     justify-content: center;
 }
 
+/* Explicit flex centering, same as block_playerhud's .ph-sidebar-avatar-container —
+   more robust than relying on the ancestor's text-align: center, which stops
+   centering the avatar trigger button if its display is ever overridden away
+   from inline-block (e.g. block edit mode's own block-content button styles). */
+.block_playergames .bpg-avatar-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 /* Matches block_playerhud's sidebar avatar treatment (110px, white ring, shadow) —
    the shared local_playergames avatar partial only carries its own sizing on the
    Hub page (scoped to body.path-local-playergames), so the block restates it here. */
@@ -49,9 +59,6 @@
     background: var(--bs-secondary-bg, #e9ecef);
     border: 3px solid var(--light, #fff);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    /* Most emoji glyphs render with a slight optical left bias inside a
-       centered flex box; nudging the available space right re-centres them. */
-    padding-inline-start: 0.15em;
 }
 
 .block_playergames .pg-hub-profile-avatar-img {
