@@ -72,12 +72,12 @@
         "showinranking": true,
         "hasposition": true,
         "str_position": "Your position: #3",
-        "str_showinranking": "Appear in ranking",
+        "str_ranking_toggle": "Deactivate",
         "learningxprankingenabled": true,
         "learningshowinranking": true,
         "haslearningposition": true,
         "str_learning_position": "Your position: #7",
-        "str_show_learningxpranking": "Appear in learning ranking"
+        "str_learning_ranking_toggle": "Deactivate"
     }
 }}
 <div class="bpg-widget">
@@ -149,27 +149,27 @@
     </div>
 
     {{#rankingenabled}}
-    <div class="small mt-2">
-        {{#hasposition}}
-        <div><i class="fa fa-trophy text-warning me-1" aria-hidden="true"></i>{{str_position}}</div>
-        {{/hasposition}}
-        <div class="form-check form-switch">
+    <div class="d-flex align-items-center justify-content-between small mt-2">
+        <span>
+            {{#hasposition}}<i class="fa fa-trophy text-warning me-1" aria-hidden="true"></i>{{str_position}}{{/hasposition}}
+        </span>
+        <div class="form-check form-switch mb-0">
             <input class="form-check-input" type="checkbox" id="bpg-showinranking"
                 data-ranking-visibility {{#showinranking}}checked{{/showinranking}}>
-            <label class="form-check-label" for="bpg-showinranking">{{str_showinranking}}</label>
+            <label class="form-check-label" for="bpg-showinranking">{{str_ranking_toggle}}</label>
         </div>
     </div>
     {{/rankingenabled}}
 
     {{#learningxprankingenabled}}
-    <div class="small mt-1">
-        {{#haslearningposition}}
-        <div><i class="fa fa-book text-info me-1" aria-hidden="true"></i>{{str_learning_position}}</div>
-        {{/haslearningposition}}
-        <div class="form-check form-switch">
+    <div class="d-flex align-items-center justify-content-between small mt-1">
+        <span>
+            {{#haslearningposition}}<i class="fa fa-book text-info me-1" aria-hidden="true"></i>{{str_learning_position}}{{/haslearningposition}}
+        </span>
+        <div class="form-check form-switch mb-0">
             <input class="form-check-input" type="checkbox" id="bpg-show-learningxpranking"
                 data-learning-ranking-visibility {{#learningshowinranking}}checked{{/learningshowinranking}}>
-            <label class="form-check-label" for="bpg-show-learningxpranking">{{str_show_learningxpranking}}</label>
+            <label class="form-check-label" for="bpg-show-learningxpranking">{{str_learning_ranking_toggle}}</label>
         </div>
     </div>
     {{/learningxprankingenabled}}

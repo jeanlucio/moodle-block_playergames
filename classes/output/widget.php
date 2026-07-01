@@ -251,14 +251,18 @@ class widget implements renderable, templatable {
             'str_position'            => $selfposition > 0
                 ? get_string('hub_your_position', 'local_playergames', $selfposition)
                 : '',
-            'str_showinranking'        => get_string('hub_showinranking', 'local_playergames'),
+            'str_ranking_toggle'      => $profile->showinranking
+                ? get_string('widget_deactivate', 'block_playergames')
+                : get_string('widget_activate', 'block_playergames'),
             'learningxprankingenabled' => $learningxprankingenabled,
             'learningshowinranking'    => $learningshowinranking,
             'haslearningposition'      => $learningposition > 0,
             'str_learning_position'    => $learningposition > 0
                 ? get_string('hub_your_position', 'local_playergames', $learningposition)
                 : '',
-            'str_show_learningxpranking' => get_string('hub_show_learningxpranking', 'local_playergames'),
+            'str_learning_ranking_toggle' => $learningshowinranking
+                ? get_string('widget_deactivate', 'block_playergames')
+                : get_string('widget_activate', 'block_playergames'),
         ];
     }
 }
