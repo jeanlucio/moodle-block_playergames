@@ -122,6 +122,18 @@ The only business logic that belongs to this plugin — which of the three state
 vendor/bin/phpunit --testsuite block_playergames
 ```
 
+#### Behat — Acceptance Tests
+
+| Feature file | Scenarios | What is covered |
+|--------------|----------:|----------------|
+| `block_playergames_widget.feature` | 3 | Normal-state pause link opens the gamification preferences page; opting out from the widget shows the paused state; reactivating from the paused state restores the normal widget |
+| **Total** | **3** | |
+
+```bash
+php admin/tool/behat/cli/init.php
+vendor/bin/behat --tags=@block_playergames --profile=chrome
+```
+
 ---
 
 ### 🔐 Security & Privacy
@@ -249,6 +261,18 @@ A única lógica de negócio deste plugin — qual dos três estados renderizar 
 
 ```bash
 vendor/bin/phpunit --testsuite block_playergames
+```
+
+#### Behat — Testes de Aceitação
+
+| Arquivo de feature | Cenários | O que é coberto |
+|--------------------|--------:|----------------|
+| `block_playergames_widget.feature` | 3 | Link de pausa no estado normal abre a página de preferências de gamificação; desativar pelo widget mostra o estado pausado; reativar a partir do estado pausado restaura o widget normal |
+| **Total** | **3** | |
+
+```bash
+php admin/tool/behat/cli/init.php
+vendor/bin/behat --tags=@block_playergames --profile=chrome
 ```
 
 ---
