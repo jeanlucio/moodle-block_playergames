@@ -29,18 +29,16 @@ import * as RankingToggle from 'local_playergames/ranking_toggle';
 /**
  * Initialises the widget's interactions.
  *
- * The ranking toggles pass reload = false: the widget has no ranking list of
- * its own to refresh, unlike the Hub page.
+ * The ranking toggles reload the page on change (the default), matching the
+ * Hub page's own behaviour — the widget's "your position" line needs to
+ * appear/disappear immediately when the user opts in or out, and a reload is
+ * the simplest way to reflect that reliably.
  */
 const init = () => {
     AvatarModal.init();
     HelpModal.init();
-    RankingToggle.wire('[data-ranking-visibility]', 'local_playergames_set_ranking_visibility', false);
-    RankingToggle.wire(
-        '[data-learning-ranking-visibility]',
-        'local_playergames_set_learning_ranking_visibility',
-        false
-    );
+    RankingToggle.wire('[data-ranking-visibility]', 'local_playergames_set_ranking_visibility');
+    RankingToggle.wire('[data-learning-ranking-visibility]', 'local_playergames_set_learning_ranking_visibility');
 };
 
 export {init};
