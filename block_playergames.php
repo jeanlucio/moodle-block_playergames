@@ -87,12 +87,18 @@ class block_playergames extends block_base {
     /**
      * Define where this block can be added.
      *
+     * Deliberately the opposite of block_playerhud's course-view + my (no
+     * site) split: PlayerGames shows site-wide season XP, so it belongs on
+     * the site front page and the Dashboard, not inside courses — that is
+     * where block_playerhud already shows the course-scoped widget, and the
+     * two should complement each other rather than overlap.
+     *
      * @return array
      */
     public function applicable_formats() {
         return [
-            'course-view' => true,
-            'site' => false,
+            'course-view' => false,
+            'site' => true,
             'my' => true,
         ];
     }
