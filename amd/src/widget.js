@@ -27,6 +27,38 @@ import * as HelpModal from 'local_playergames/help_modal';
 import * as RankingToggle from 'local_playergames/ranking_toggle';
 
 /**
+ * Hoists the history/help button row into the block's own title row, so they
+ * sit on the same line as "PlayerGames" instead of on a row of their own.
+ * Mirrors block_playerhud's view.js.
+ */
+const hoistHeaderActions = () => {
+    const widget = document.querySelector('.bpg-widget');
+    if (!widget) {
+        return;
+    }
+    const btnRow = widget.querySelector('.bpg-header-actions');
+    const block = widget.closest('.block_playergames');
+    if (!btnRow || !block) {
+        return;
+    }
+    const titleEl = block.querySelector('.card-title');
+    if (!titleEl) {
+        return;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'd-flex align-items-center mb-2';
+    titleEl.parentElement.insertBefore(wrapper, titleEl);
+    titleEl.classList.add('mb-0');
+    wrapper.appendChild(titleEl);
+
+    btnRow.remove();
+    btnRow.classList.remove('mb-2');
+    btnRow.classList.add('ms-auto');
+    wrapper.appendChild(btnRow);
+};
+
+/**
  * Initialises the widget's interactions.
  *
  * The ranking toggles reload the page on change (the default), matching the
@@ -35,6 +67,7 @@ import * as RankingToggle from 'local_playergames/ranking_toggle';
  * the simplest way to reflect that reliably.
  */
 const init = () => {
+    hoistHeaderActions();
     AvatarModal.init();
     HelpModal.init();
     RankingToggle.wire('[data-ranking-visibility]', 'local_playergames_set_ranking_visibility');
