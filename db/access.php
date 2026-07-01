@@ -49,15 +49,16 @@ $capabilities = [
         'clonepermissionsfrom' => 'moodle/my:manageblocks',
     ],
 
-    // Ability to view the PlayerGames widget content.
+    // Ability to view the PlayerGames widget content. Granted to every
+    // authenticated user (not just student/teacher/manager) because the
+    // widget shows on the site front page and Dashboard, where a user's
+    // course-level roles never reach — the same reasoning already applied
+    // to local/playergames:viewhub.
     'block/playergames:view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => [
-            'student' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
+            'user' => CAP_ALLOW,
         ],
     ],
 ];
