@@ -27,6 +27,7 @@
         "url_history": "#",
         "url_hub": "#",
         "str_open_hub": "Open Player Hub",
+        "str_games": "Today's games",
         "equippedavatar": "🦊",
         "hasequippedavatar": true,
         "userpictureurl": "https://example.com/pic.jpg",
@@ -81,16 +82,13 @@
 }}
 <div class="bpg-widget">
 
-    <div class="d-flex align-items-center justify-content-between mb-2">
-        <span class="fw-bold small">{{#str}} pluginname, block_playergames {{/str}}</span>
-        <div class="d-flex align-items-center gap-1">
-            <a href="{{url_history}}" class="btn btn-outline-secondary btn-sm"
-               aria-label="{{#str}} dashboard_card_history, local_playergames {{/str}}"
-               title="{{#str}} dashboard_card_history, local_playergames {{/str}}">
-                <i class="fa fa-clock-rotate-left" aria-hidden="true"></i>
-            </a>
-            {{> local_playergames/help_trigger_button }}
-        </div>
+    <div class="d-flex align-items-center justify-content-end gap-1 mb-2">
+        <a href="{{url_history}}" class="btn btn-outline-secondary btn-sm"
+           aria-label="{{#str}} dashboard_card_history, local_playergames {{/str}}"
+           title="{{#str}} dashboard_card_history, local_playergames {{/str}}">
+            <i class="fa fa-clock-rotate-left" aria-hidden="true"></i>
+        </a>
+        {{> local_playergames/help_trigger_button }}
     </div>
 
     <div class="text-center mb-2">
@@ -111,6 +109,9 @@
     </div>
     {{/maxlevel}}
 
+    <div class="text-center small fw-bold text-muted mb-1">
+        <i class="fa fa-gamepad me-1" aria-hidden="true"></i>{{str_games}}
+    </div>
     <div class="d-flex justify-content-center gap-2 mb-1">
         {{#games}}
         <a href="{{url}}" class="btn btn-outline-secondary btn-sm bpg-game-shortcut"
@@ -121,28 +122,28 @@
     </div>
 
     <div class="row row-cols-4 g-1 text-center small mt-2">
-        <div class="col">
+        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_streak}}"
+             aria-label="{{str_streak}}: {{streak}}">
             <i class="fa fa-fire text-warning" aria-hidden="true"></i>
             <div class="fw-bold">{{streak}}</div>
-            <div class="text-muted">{{str_streak}}</div>
         </div>
-        <div class="col">
+        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_freezes}}"
+             aria-label="{{str_freezes}}: {{freezes}}">
             <i class="fa fa-snowflake text-info" aria-hidden="true"></i>
             <div class="fw-bold">{{freezes}}</div>
-            <div class="text-muted">{{str_freezes}}</div>
         </div>
         {{#hascheckin}}
-        <div class="col">
+        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_checkins}}"
+             aria-label="{{str_checkins}}: {{checkin_done}}/{{checkin_max}}">
             <i class="fa fa-calendar-check text-success" aria-hidden="true"></i>
             <div class="fw-bold">{{checkin_done}}/{{checkin_max}}</div>
-            <div class="text-muted">{{str_checkins}}</div>
         </div>
         {{/hascheckin}}
         {{#showlearningxp}}
-        <div class="col">
+        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_learningxp}}"
+             aria-label="{{str_learningxp}}: {{learningxp}}">
             <i class="fa fa-book" aria-hidden="true"></i>
             <div class="fw-bold">{{learningxp}}</div>
-            <div class="text-muted">{{str_learningxp}}</div>
         </div>
         {{/showlearningxp}}
     </div>

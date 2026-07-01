@@ -33,3 +33,29 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Matches block_playerhud's sidebar avatar treatment (110px, white ring, shadow) —
+   the shared local_playergames avatar partial only carries its own sizing on the
+   Hub page (scoped to body.path-local-playergames), so the block restates it here. */
+.block_playergames .pg-hub-profile-avatar-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    font-size: 3.5rem;
+    line-height: 1;
+    border-radius: 50%;
+    background: var(--bs-secondary-bg, #e9ecef);
+    border: 3px solid var(--light, #fff);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.block_playergames .pg-hub-profile-avatar-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--light, #fff);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

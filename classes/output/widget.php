@@ -199,6 +199,7 @@ class widget implements renderable, templatable {
             'url_history'        => (new moodle_url('/local/playergames/history.php'))->out(false),
             'url_hub'            => (new moodle_url('/local/playergames/hub.php'))->out(false),
             'str_open_hub'       => get_string('widget_open_hub', 'block_playergames'),
+            'str_games'          => get_string('hub_games_section', 'local_playergames'),
 
             'equippedavatar'     => $equippedavatar,
             'hasequippedavatar'  => $equippedavatar !== '',
