@@ -102,9 +102,21 @@ PlayerGames Block is a companion to **`local_playergames`**, the ecosystem's cen
 
 The only business logic that belongs to this plugin — which of the three states to render — is covered by PHPUnit. Everything else is orchestration of `local_playergames` managers, already tested in that plugin.
 
+#### PHPUnit — Unit & Integration Tests
+
 | Test file | Cases | What is covered |
 |-----------|------:|----------------|
-| `output/widget_test.php` | 6 | State selection: paused when gamification is opted out, hidden with no active season or when excluded by the participant-group setting, normal otherwise; normal-state data sanity (username, level, XP); learning XP hidden when the admin setting is off |
+| `output/widget_test.php` | 8 | State selection: paused when gamification is opted out, hidden with no active season or when excluded by the participant-group setting, normal otherwise; normal-state data sanity (username, level, XP); learning XP hidden when the admin setting is off; self and learning ranking position + opt-in toggle text once the user opts into each ranking |
+| `privacy/provider_test.php` | 2 | Implements `null_provider`; `get_reason()` points to a real lang string |
+| **Total** | **10** | |
+
+**Line coverage by class (PHPUnit + Xdebug):**
+
+| Class | Line coverage |
+|-------|:-------------:|
+| `output\widget` | 100% |
+| `privacy\provider` | 100% |
+| **Overall** | **100%** |
 
 ```bash
 vendor/bin/phpunit --testsuite block_playergames
@@ -219,9 +231,21 @@ O Bloco PlayerGames é um companheiro do **`local_playergames`**, o hub central 
 
 A única lógica de negócio deste plugin — qual dos três estados renderizar — é coberta por PHPUnit. Todo o resto é orquestração de managers do `local_playergames`, já testados naquele plugin.
 
+#### PHPUnit — Testes Unitários e de Integração
+
 | Arquivo de teste | Casos | O que é coberto |
 |------------------|------:|----------------|
-| `output/widget_test.php` | 6 | Seleção de estado: pausado quando a gamificação está desativada, oculto sem temporada ativa ou quando excluído pela configuração de grupo de participantes, normal nos demais casos; sanidade dos dados do estado normal (nome, nível, XP); XP de aprendizado oculto quando a configuração do admin está desligada |
+| `output/widget_test.php` | 8 | Seleção de estado: pausado quando a gamificação está desativada, oculto sem temporada ativa ou quando excluído pela configuração de grupo de participantes, normal nos demais casos; sanidade dos dados do estado normal (nome, nível, XP); XP de aprendizado oculto quando a configuração do admin está desligada; posição e texto do toggle de opt-in nos rankings de temporada e de aprendizado quando o usuário adere a cada um |
+| `privacy/provider_test.php` | 2 | Implementa `null_provider`; `get_reason()` aponta para uma string de idioma real |
+| **Total** | **10** | |
+
+**Cobertura de linhas por classe (PHPUnit + Xdebug):**
+
+| Classe | Cobertura de linhas |
+|--------|:-------------------:|
+| `output\widget` | 100% |
+| `privacy\provider` | 100% |
+| **Total** | **100%** |
 
 ```bash
 vendor/bin/phpunit --testsuite block_playergames

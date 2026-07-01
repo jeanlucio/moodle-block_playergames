@@ -24,6 +24,8 @@
 
 namespace block_playergames\output;
 
+use local_playergames\hub\learning_xp_manager;
+use local_playergames\hub\xp_manager;
 use local_playergames\local\preferences;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -130,5 +132,41 @@ final class widget_test extends \advanced_testcase {
         $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
 
         $this->assertFalse($data['showlearningxp']);
+    }
+
+    public function test_normal_state_shows_self_position_when_opted_into_ranking(): void {
+        $this->resetAfterTest();
+        $seasonid = $this->make_active_season();
+        $user = $this->getDataGenerator()->create_user();
+        xp_manager::set_ranking_visibility((int) $user->id, $seasonid, true);
+
+        $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertTrue($data['showinranking']);
+        $this->assertTrue($data['hasposition']);
+        $this->assertNotSame('', $data['str_position']);
+        $this->assertSame(get_string('widget_deactivate', 'block_playergames'), $data['str_ranking_toggle']);
+    }
+
+    public function test_normal_state_shows_learning_position_when_opted_into_ranking(): void {
+        $this->resetAfterTest();
+        $this->make_active_season();
+        set_config('showlearningxp', 1, 'local_playergames');
+        set_config('learningxpranking', 1, 'local_playergames');
+        $user = $this->getDataGenerator()->create_user();
+        learning_xp_manager::record_change((int) $user->id, 50);
+        learning_xp_manager::set_ranking_visibility((int) $user->id, true);
+
+        $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertSame(50, $data['learningxp']);
+        $this->assertTrue($data['learningxprankingenabled']);
+        $this->assertTrue($data['learningshowinranking']);
+        $this->assertTrue($data['haslearningposition']);
+        $this->assertNotSame('', $data['str_learning_position']);
+        $this->assertSame(
+            get_string('widget_deactivate', 'block_playergames'),
+            $data['str_learning_ranking_toggle']
+        );
     }
 }
