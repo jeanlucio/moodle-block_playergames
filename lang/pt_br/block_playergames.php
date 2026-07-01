@@ -33,5 +33,6 @@ $string['widget_activate_learning_ranking'] = 'Ativar ranking de aprendizado';
 $string['widget_activate_ranking'] = 'Ativar ranking';
 $string['widget_deactivate'] = 'Desativar';
 $string['widget_open_hub'] = 'Abrir Player Hub';
+$string['widget_pause_gamification'] = 'Pausar gamificação';
 $string['widget_paused'] = 'A gamificação está pausada';
 $string['widget_reactivate'] = 'Reativar';

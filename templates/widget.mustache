@@ -26,7 +26,9 @@
         "username": "Jean Lúcio",
         "url_history": "#",
         "url_hub": "#",
+        "url_gamification_prefs": "#",
         "str_open_hub": "Open Player Hub",
+        "str_pause_gamification": "Pause gamification",
         "str_games": "Today's games",
         "equippedavatar": "🦊",
         "hasequippedavatar": true,
@@ -178,6 +180,9 @@
 
     <a href="{{url_hub}}" class="btn btn-primary btn-sm w-100 mt-3">
         {{str_open_hub}} <i class="fa fa-arrow-right ms-1" aria-hidden="true"></i>
+    </a>
+    <a href="{{url_gamification_prefs}}" class="btn btn-outline-secondary btn-sm w-100 mt-2">
+        <i class="fa fa-pause me-1" aria-hidden="true"></i>{{str_pause_gamification}}
     </a>
 
     {{> local_playergames/avatar_collection_modal }}

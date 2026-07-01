@@ -123,6 +123,20 @@ final class widget_test extends \advanced_testcase {
         $this->assertSame(0, $data['xp']);
     }
 
+    public function test_normal_state_includes_gamification_pause_link(): void {
+        $this->resetAfterTest();
+        $this->make_active_season();
+        $user = $this->getDataGenerator()->create_user();
+
+        $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertStringContainsString(
+            '/local/playergames/gamification_preferences.php',
+            $data['url_gamification_prefs']
+        );
+        $this->assertSame(get_string('widget_pause_gamification', 'block_playergames'), $data['str_pause_gamification']);
+    }
+
     public function test_normal_state_hides_learning_xp_when_not_visible(): void {
         $this->resetAfterTest();
         $this->make_active_season();
