@@ -253,7 +253,7 @@ class widget implements renderable, templatable {
                 : '',
             'str_ranking_toggle'      => $profile->showinranking
                 ? get_string('widget_deactivate', 'block_playergames')
-                : get_string('widget_activate', 'block_playergames'),
+                : get_string('widget_activate_ranking', 'block_playergames'),
             'learningxprankingenabled' => $learningxprankingenabled,
             'learningshowinranking'    => $learningshowinranking,
             'haslearningposition'      => $learningposition > 0,
@@ -262,7 +262,7 @@ class widget implements renderable, templatable {
                 : '',
             'str_learning_ranking_toggle' => $learningshowinranking
                 ? get_string('widget_deactivate', 'block_playergames')
-                : get_string('widget_activate', 'block_playergames'),
+                : get_string('widget_activate_learning_ranking', 'block_playergames'),
         ];
     }
 }
