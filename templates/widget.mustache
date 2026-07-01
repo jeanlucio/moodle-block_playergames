@@ -1,0 +1,182 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_playergames/widget
+
+    @package block_playergames
+    @copyright 2026 Jean Lúcio
+    @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "username": "Jean Lúcio",
+        "url_history": "#",
+        "url_hub": "#",
+        "str_open_hub": "Open Player Hub",
+        "equippedavatar": "🦊",
+        "hasequippedavatar": true,
+        "userpictureurl": "https://example.com/pic.jpg",
+        "avatarsbytier": [],
+        "str_avatars": "Avatars",
+        "str_avatar_change": "Change avatar",
+        "str_avatar_locked": "Locked",
+        "str_avatars_hint": "Reach higher levels to unlock more avatars.",
+        "str_help_modal_title": "How PlayerGames works",
+        "str_help_trigger": "How PlayerGames works",
+        "str_section_season_xp_title": "Season XP",
+        "str_section_season_xp_body": "Earned by playing daily games.",
+        "str_section_learning_xp_title": "Learning XP",
+        "str_section_learning_xp_body": "Mirrors your course activity.",
+        "str_section_avatars_title": "Avatars",
+        "str_section_avatars_body": "Unlocked as you level up.",
+        "str_section_rankings_title": "Rankings",
+        "str_section_rankings_body": "Opt-in only.",
+        "level": 7,
+        "xp": 320,
+        "xp_next": 180,
+        "progress_pct": 64,
+        "maxlevel": false,
+        "str_level": "Level",
+        "str_xp": "XP",
+        "str_xp_next": "XP to next level",
+        "games": [
+            {"gametype": "quiz", "icon": "fa-question-circle", "name": "PlayerQuiz", "done": false, "locked": false, "pending": true, "url": "#", "str_pending": "Play"}
+        ],
+        "streak": 5,
+        "freezes": 2,
+        "str_streak": "Streak",
+        "str_freezes": "Freezes",
+        "hascheckin": true,
+        "checkin_done": 12,
+        "checkin_max": 30,
+        "str_checkins": "Season check-ins",
+        "showlearningxp": true,
+        "learningxp": 180,
+        "str_learningxp": "Learning XP",
+        "rankingenabled": true,
+        "showinranking": true,
+        "hasposition": true,
+        "str_position": "Your position: #3",
+        "str_showinranking": "Appear in ranking",
+        "learningxprankingenabled": true,
+        "learningshowinranking": true,
+        "haslearningposition": true,
+        "str_learning_position": "Your position: #7",
+        "str_show_learningxpranking": "Appear in learning ranking"
+    }
+}}
+<div class="bpg-widget">
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <span class="fw-bold small">{{#str}} pluginname, block_playergames {{/str}}</span>
+        <div class="d-flex align-items-center gap-1">
+            <a href="{{url_history}}" class="btn btn-outline-secondary btn-sm"
+               aria-label="{{#str}} dashboard_card_history, local_playergames {{/str}}"
+               title="{{#str}} dashboard_card_history, local_playergames {{/str}}">
+                <i class="fa fa-clock-rotate-left" aria-hidden="true"></i>
+            </a>
+            {{> local_playergames/help_trigger_button }}
+        </div>
+    </div>
+
+    <div class="text-center mb-2">
+        {{> local_playergames/avatar_trigger_button }}
+        <div class="fw-bold text-truncate small mt-1" title="{{username}}">{{username}}</div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-1 small">
+        <span class="badge bg-primary">{{str_level}} {{level}}</span>
+        <span class="badge bg-primary">{{xp}} {{str_xp}}</span>
+    </div>
+
+    {{^maxlevel}}
+    <div class="progress mb-2" role="progressbar"
+        aria-valuenow="{{progress_pct}}" aria-valuemin="0" aria-valuemax="100"
+        aria-label="{{str_xp_next}}: {{xp_next}}">
+        <div class="progress-bar bg-primary" style="width: {{progress_pct}}%"></div>
+    </div>
+    {{/maxlevel}}
+
+    <div class="d-flex justify-content-center gap-2 mb-1">
+        {{#games}}
+        <a href="{{url}}" class="btn btn-outline-secondary btn-sm bpg-game-shortcut"
+           title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}">
+            <i class="fa {{icon}}" aria-hidden="true"></i>
+        </a>
+        {{/games}}
+    </div>
+
+    <div class="row row-cols-4 g-1 text-center small mt-2">
+        <div class="col">
+            <i class="fa fa-fire text-warning" aria-hidden="true"></i>
+            <div class="fw-bold">{{streak}}</div>
+            <div class="text-muted">{{str_streak}}</div>
+        </div>
+        <div class="col">
+            <i class="fa fa-snowflake text-info" aria-hidden="true"></i>
+            <div class="fw-bold">{{freezes}}</div>
+            <div class="text-muted">{{str_freezes}}</div>
+        </div>
+        {{#hascheckin}}
+        <div class="col">
+            <i class="fa fa-calendar-check text-success" aria-hidden="true"></i>
+            <div class="fw-bold">{{checkin_done}}/{{checkin_max}}</div>
+            <div class="text-muted">{{str_checkins}}</div>
+        </div>
+        {{/hascheckin}}
+        {{#showlearningxp}}
+        <div class="col">
+            <i class="fa fa-book" aria-hidden="true"></i>
+            <div class="fw-bold">{{learningxp}}</div>
+            <div class="text-muted">{{str_learningxp}}</div>
+        </div>
+        {{/showlearningxp}}
+    </div>
+
+    {{#rankingenabled}}
+    <div class="small mt-2">
+        {{#hasposition}}
+        <div><i class="fa fa-trophy text-warning me-1" aria-hidden="true"></i>{{str_position}}</div>
+        {{/hasposition}}
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="bpg-showinranking"
+                data-ranking-visibility {{#showinranking}}checked{{/showinranking}}>
+            <label class="form-check-label" for="bpg-showinranking">{{str_showinranking}}</label>
+        </div>
+    </div>
+    {{/rankingenabled}}
+
+    {{#learningxprankingenabled}}
+    <div class="small mt-1">
+        {{#haslearningposition}}
+        <div><i class="fa fa-book text-info me-1" aria-hidden="true"></i>{{str_learning_position}}</div>
+        {{/haslearningposition}}
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="bpg-show-learningxpranking"
+                data-learning-ranking-visibility {{#learningshowinranking}}checked{{/learningshowinranking}}>
+            <label class="form-check-label" for="bpg-show-learningxpranking">{{str_show_learningxpranking}}</label>
+        </div>
+    </div>
+    {{/learningxprankingenabled}}
+
+    <a href="{{url_hub}}" class="btn btn-primary btn-sm w-100 mt-3">
+        {{str_open_hub}} <i class="fa fa-arrow-right ms-1" aria-hidden="true"></i>
+    </a>
+
+    {{> local_playergames/avatar_collection_modal }}
+    {{> local_playergames/help_modal }}
+</div>

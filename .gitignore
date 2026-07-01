@@ -1,0 +1,9 @@
+SCOPE.md
+.docs/
+.claude/
+node_modules/
+.grunt/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
