@@ -1,0 +1,12 @@
+# Each entry needs an image at docs/assets/img/screenshots/<file>, plus an
+# English and a Portuguese caption. The screenshots.md pages (en/pt) loop over
+# this list, so adding a new screenshot never touches the gallery markup.
+- file: block-normal.png
+  caption_en: "The PlayerGames block in the Dashboard drawer: avatar, level, XP bar, today's mini-games and streak — all site-wide data at a glance"
+  caption_pt: "O Bloco PlayerGames na gaveta do Painel: avatar, nível, barra de XP, minijogos do dia e streak — todos os dados site-wide de relance"
+- file: block-frontpage.png
+  caption_en: "The PlayerGames block on the site front page drawer: the same profile mirrored wherever an administrator adds it"
+  caption_pt: "O Bloco PlayerGames na gaveta da página inicial do site: o mesmo perfil espelhado onde quer que um administrador o adicione"
+- file: block-avatar.png
+  caption_en: "Avatar selection modal opened directly from the block: the same collection shown in the full Player Hub, keeping everything in sync"
+  caption_pt: "Modal de seleção de avatar aberto diretamente do bloco: a mesma coleção exibida no Player Hub completo, mantendo tudo sincronizado"
