@@ -24,6 +24,7 @@
 
 namespace block_playergames\output;
 
+use local_playergames\hub\daily_play_manager;
 use local_playergames\hub\learning_xp_manager;
 use local_playergames\hub\xp_manager;
 use local_playergames\local\preferences;
@@ -182,5 +183,45 @@ final class widget_test extends \advanced_testcase {
             get_string('widget_deactivate', 'block_playergames'),
             $data['str_learning_ranking_toggle']
         );
+    }
+
+    /**
+     * Regression test: a shortcut to a game that cannot be played today is not a link.
+     *
+     * The hub leaves the URL empty for a game already played, and the template wrote it as href="",
+     * a link that only reloaded the page.
+     */
+    public function test_game_shortcuts_link_only_when_the_game_can_be_played(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->redirectEvents();
+        $seasonid = $this->make_active_season(['xp_per_game_battle' => 10, 'xp_games_battle' => 1]);
+        $now = time();
+        $DB->insert_record('local_playergames_cartridges', (object) [
+            'name' => 'C', 'version' => '1.0', 'language' => 'en', 'type' => 'quiz',
+            'timecreated' => $now, 'timemodified' => $now, 'uploadedby' => 0, 'active' => 1,
+        ]);
+        $user     = $this->getDataGenerator()->create_user();
+        $renderer = $this->get_renderer();
+        $render   = fn(): string => $renderer->render_from_template(
+            'block_playergames/widget',
+            (new widget((int) $user->id, false, false, 'students'))->export_for_template($renderer)
+        );
+
+        $html = $render();
+        $this->assertStringContainsString('/local/playergames/play_battle.php', $html);
+        $this->assertStringNotContainsString('href=""', $html);
+
+        daily_play_manager::register_play(
+            (int) $user->id,
+            'battle',
+            mktime(0, 0, 0),
+            $DB->get_record('local_playergames_seasons', ['id' => $seasonid], '*', MUST_EXIST),
+            \context_system::instance()
+        );
+        $html = $render();
+        $this->assertStringNotContainsString('play_battle.php', $html);
+        $this->assertStringNotContainsString('href=""', $html);
+        $this->assertStringContainsString('/local/playergames/play_quiz.php', $html);
     }
 }

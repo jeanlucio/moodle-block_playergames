@@ -118,10 +118,18 @@
     </div>
     <div class="d-flex justify-content-center gap-2 mb-1">
         {{#games}}
+        {{#url}}
         <a href="{{url}}" class="btn btn-outline-secondary btn-sm bpg-game-shortcut"
            title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}">
             <i class="fa {{icon}}" aria-hidden="true"></i>
         </a>
+        {{/url}}
+        {{^url}}
+        <span class="btn btn-outline-secondary btn-sm bpg-game-shortcut disabled" role="img"
+              title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}">
+            <i class="fa {{icon}}" aria-hidden="true"></i>
+        </span>
+        {{/url}}
         {{/games}}
     </div>
 
