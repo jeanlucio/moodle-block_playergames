@@ -44,7 +44,7 @@ use user_picture;
 
 /**
  * A thin shell over local_playergames's managers — no business logic of its
- * own beyond picking which of three states to render.
+ * own beyond picking which of its states to render.
  *
  * @package    block_playergames
  * @copyright  2026 Jean Lúcio
@@ -79,7 +79,7 @@ class widget implements renderable, templatable {
     }
 
     /**
-     * Picks the widget's state (normal, paused or hidden) and exports its data.
+     * Picks the widget's state (normal, paused, no season or hidden) and exports its data.
      *
      * @param renderer_base $output Moodle renderer.
      * @return array
@@ -91,7 +91,7 @@ class widget implements renderable, templatable {
 
         $season = season_manager::get_active();
         if (!$season) {
-            return ['state' => 'hidden'];
+            return $this->export_no_season();
         }
 
         if (!access::can_view_hub($this->isstaff, $this->isadmin, $this->allowed)) {
@@ -99,6 +99,41 @@ class widget implements renderable, templatable {
         }
 
         return $this->export_normal($output, $season);
+    }
+
+    /**
+     * Exports what the block shows while no season is active.
+     *
+     * An administrator always sees it, since they are the one who can start a season. A player sees it
+     * only once a season has existed, or is scheduled: before that there is nothing to miss, and a
+     * block saying so would only be noise on a site that never ran the game.
+     *
+     * @return array
+     */
+    private function export_no_season(): array {
+        if (!access::can_view_hub($this->isstaff, $this->isadmin, $this->allowed)) {
+            return ['state' => 'hidden'];
+        }
+
+        if (!$this->isadmin && !season_manager::has_any()) {
+            return ['state' => 'hidden'];
+        }
+
+        $upcoming = season_manager::get_active_or_upcoming();
+
+        return [
+            'state'           => 'noseason',
+            'str_no_season'   => get_string('widget_no_season', 'block_playergames'),
+            'str_next_season' => $upcoming === null ? '' : get_string(
+                'widget_next_season',
+                'block_playergames',
+                userdate((int) $upcoming->startdate, get_string('strftimedate', 'langconfig'))
+            ),
+            'url_hub'         => (new moodle_url('/local/playergames/hub.php'))->out(false),
+            'str_open_hub'    => get_string('widget_open_hub', 'block_playergames'),
+            'url_manage'      => $this->isadmin ? (new moodle_url('/local/playergames/manage_seasons.php'))->out(false) : '',
+            'str_manage'      => get_string('widget_manage_seasons', 'block_playergames'),
+        ];
     }
 
     /**

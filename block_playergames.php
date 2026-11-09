@@ -71,6 +71,11 @@ class block_playergames extends block_base {
             return $this->content;
         }
 
+        if ($data['state'] === 'noseason') {
+            $this->content->text = $renderer->render_from_template('block_playergames/noseason', $data);
+            return $this->content;
+        }
+
         $this->page->requires->js_call_amd('block_playergames/widget', 'init');
         $this->content->text = $renderer->render_from_template('block_playergames/widget', $data);
         return $this->content;

@@ -1,0 +1,37 @@
+{{!
+    @template block_playergames/noseason
+
+    Displays what the block shows while no season is active: a notice, the date of the next season when
+    there is one, a link to the hub and, for an administrator, a link to the seasons.
+
+    @package block_playergames
+    @copyright 2026 Jean Lúcio
+    @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "str_no_season": "There is no active season at the moment.",
+        "str_next_season": "The next season starts on 1 December 2026.",
+        "url_hub": "#",
+        "str_open_hub": "Open Player Hub",
+        "url_manage": "#",
+        "str_manage": "Manage seasons"
+    }
+}}
+<div class="text-center py-3 bpg-noseason">
+    <div class="mb-2 text-muted opacity-50">
+        <i class="fa fa-calendar fa-3x" aria-hidden="true"></i>
+    </div>
+    <p class="small text-muted mb-2">{{str_no_season}}</p>
+    {{#str_next_season}}
+    <p class="small fw-bold mb-3">{{str_next_season}}</p>
+    {{/str_next_season}}
+    <a href="{{url_hub}}" class="btn btn-primary btn-sm w-100 shadow-sm">
+        <i class="fa fa-trophy me-1" aria-hidden="true"></i>{{str_open_hub}}
+    </a>
+    {{#url_manage}}
+    <a href="{{url_manage}}" class="btn btn-outline-secondary btn-sm w-100 mt-2">
+        <i class="fa fa-cog me-1" aria-hidden="true"></i>{{str_manage}}
+    </a>
+    {{/url_manage}}
+</div>

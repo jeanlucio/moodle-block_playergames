@@ -25,11 +25,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_playergames';
-$plugin->version   = 2026070101;
+$plugin->version   = 2026110901;
 $plugin->requires  = 2024100700;
 $plugin->supported = [405, 503];
 $plugin->maturity  = MATURITY_ALPHA;
 $plugin->release   = '0.1.0';
 $plugin->dependencies = [
-    'local_playergames' => ANY_VERSION,
+    'local_playergames' => 2026110902,
 ];

@@ -64,6 +64,26 @@ final class widget_test extends \advanced_testcase {
     }
 
     /**
+     * Inserts a season with a given status.
+     *
+     * @param string $status active, upcoming or closed.
+     * @param int $start Start timestamp.
+     * @return int Season id.
+     */
+    private function make_season(string $status, int $start): int {
+        global $DB;
+        return (int) $DB->insert_record('local_playergames_seasons', (object) [
+            'name' => 'Season ' . $status,
+            'startdate' => $start,
+            'enddate' => $start + (DAYSECS * 30),
+            'status' => $status,
+            'config_snapshot' => json_encode([]),
+            'timecreated' => $start,
+            'timemodified' => $start,
+        ]);
+    }
+
+    /**
      * Returns a renderer usable for export_for_template() in a CLI/test context.
      *
      * @return \renderer_base
@@ -223,5 +243,72 @@ final class widget_test extends \advanced_testcase {
         $this->assertStringNotContainsString('play_battle.php', $html);
         $this->assertStringNotContainsString('href=""', $html);
         $this->assertStringContainsString('/local/playergames/play_quiz.php', $html);
+    }
+
+    public function test_an_administrator_sees_the_no_season_notice_even_before_any_season(): void {
+        $this->resetAfterTest();
+        $user = $this->getDataGenerator()->create_user();
+
+        $data = (new widget((int) $user->id, false, true, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertSame('noseason', $data['state']);
+        $this->assertStringContainsString('/local/playergames/manage_seasons.php', $data['url_manage']);
+        $this->assertSame('', $data['str_next_season']);
+    }
+
+    public function test_a_player_sees_the_no_season_notice_once_a_season_has_existed(): void {
+        $this->resetAfterTest();
+        $this->make_season('closed', time() - (DAYSECS * 60));
+        $user = $this->getDataGenerator()->create_user();
+
+        $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertSame('noseason', $data['state']);
+        $this->assertStringContainsString('/local/playergames/hub.php', $data['url_hub']);
+        $this->assertSame('', $data['url_manage']);
+        $this->assertSame('', $data['str_next_season']);
+    }
+
+    public function test_a_player_is_told_when_the_next_season_starts(): void {
+        $this->resetAfterTest();
+        $start = time() + (DAYSECS * 10);
+        $this->make_season('upcoming', $start);
+        $user = $this->getDataGenerator()->create_user();
+
+        $data = (new widget((int) $user->id, false, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertSame('noseason', $data['state']);
+        $this->assertStringContainsString(userdate($start, get_string('strftimedate', 'langconfig')), $data['str_next_season']);
+    }
+
+    public function test_a_participant_excluded_by_the_setting_still_sees_nothing_without_a_season(): void {
+        $this->resetAfterTest();
+        $this->make_season('closed', time() - (DAYSECS * 60));
+        $user = $this->getDataGenerator()->create_user();
+
+        $data = (new widget((int) $user->id, true, false, 'students'))->export_for_template($this->get_renderer());
+
+        $this->assertSame('hidden', $data['state']);
+    }
+
+    public function test_the_no_season_notice_renders_the_manage_link_only_for_an_administrator(): void {
+        $this->resetAfterTest();
+        $user     = $this->getDataGenerator()->create_user();
+        $renderer = $this->get_renderer();
+
+        $admin  = (new widget((int) $user->id, false, true, 'students'))->export_for_template($renderer);
+        $player = (new widget((int) $user->id, false, false, 'students'))->export_for_template($renderer);
+
+        $this->assertSame('noseason', $admin['state']);
+        $this->assertSame('hidden', $player['state']);
+
+        $this->make_season('closed', time() - (DAYSECS * 60));
+        $player = (new widget((int) $user->id, false, false, 'students'))->export_for_template($renderer);
+        $adminhtml  = $renderer->render_from_template('block_playergames/noseason', $admin);
+        $playerhtml = $renderer->render_from_template('block_playergames/noseason', $player);
+
+        $this->assertStringContainsString('manage_seasons.php', $adminhtml);
+        $this->assertStringNotContainsString('manage_seasons.php', $playerhtml);
+        $this->assertStringContainsString('hub.php', $playerhtml);
     }
 }
