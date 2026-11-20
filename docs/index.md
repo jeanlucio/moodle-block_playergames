@@ -10,7 +10,7 @@ lang: en
 [![Latest Release](https://img.shields.io/github/v/release/jeanlucio/moodle-block_playergames?style=flat)](https://github.com/jeanlucio/moodle-block_playergames/releases)
 [![PlayerGames Ecosystem](https://img.shields.io/badge/PlayerGames-Ecosystem-6f42c1?style=flat&logo=gamepad&logoColor=white)](https://jeanlucio.github.io/playergames/)
 ![Role](https://img.shields.io/badge/Role-Companion_Block-0d6efd?style=flat)
-[![Author](https://img.shields.io/badge/by-Jean_Lucio-6f42c1?style=flat)](https://github.com/jeanlucio/)
+[![Author](https://img.shields.io/badge/by-Jean_Lucio-6f42c1?style=flat)](https://marketplace.moodle.com/user/984)
 
 [![Moodle Plugin CI](https://github.com/jeanlucio/moodle-block_playergames/actions/workflows/ci.yml/badge.svg)](https://github.com/jeanlucio/moodle-block_playergames/actions/workflows/ci.yml)
 [![Last Commit](https://img.shields.io/github/last-commit/jeanlucio/moodle-block_playergames?style=flat)](https://github.com/jeanlucio/moodle-block_playergames/commits)
