@@ -277,6 +277,11 @@ class widget implements renderable, templatable {
             'checkin_done'       => $checkindone,
             'checkin_max'        => $checkinmax,
             'str_checkins'       => get_string('hub_checkins', 'local_playergames'),
+            'str_checkins_hint'  => get_string(
+                'hub_checkins_hint',
+                'local_playergames',
+                (object) ['xp' => $checkindaily, 'max' => $checkinmax]
+            ),
 
             'showlearningxp'     => $showlearningxp,
             'learningxp'         => $learningxp,

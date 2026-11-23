@@ -67,7 +67,8 @@
         "hascheckin": true,
         "checkin_done": 12,
         "checkin_max": 30,
-        "str_checkins": "Season check-ins",
+        "str_checkins": "Check-ins with XP",
+        "str_checkins_hint": "5 XP each, up to 30 in the season",
         "showlearningxp": true,
         "learningxp": 180,
         "str_learningxp": "Learning XP",
@@ -146,8 +147,8 @@
             <div class="fw-bold">{{freezes}}</div>
         </div>
         {{#hascheckin}}
-        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_checkins}}"
-             aria-label="{{str_checkins}}: {{checkin_done}}/{{checkin_max}}">
+        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{str_checkins}}: {{str_checkins_hint}}"
+             aria-label="{{str_checkins}}: {{checkin_done}}/{{checkin_max}}. {{str_checkins_hint}}">
             <i class="fa fa-calendar-check text-success" aria-hidden="true"></i>
             <div class="fw-bold">{{checkin_done}}/{{checkin_max}}</div>
         </div>
