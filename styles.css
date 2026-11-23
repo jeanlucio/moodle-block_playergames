@@ -34,6 +34,11 @@
     justify-content: center;
 }
 
+/* A game done for the day is not a link: it keeps its green without the hover of a button. */
+.block_playergames .bpg-game-done {
+    pointer-events: none;
+}
+
 /* Explicit flex centering, same as block_playerhud's .ph-sidebar-avatar-container —
    more robust than relying on the ancestor's text-align: center, which stops
    centering the avatar trigger button if its display is ever overridden away

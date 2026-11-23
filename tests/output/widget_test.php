@@ -217,9 +217,13 @@ final class widget_test extends \advanced_testcase {
         $this->redirectEvents();
         $seasonid = $this->make_active_season(['xp_per_game_battle' => 10, 'xp_games_battle' => 1]);
         $now = time();
-        $DB->insert_record('local_playergames_cartridges', (object) [
+        $cartridgeid = $DB->insert_record('local_playergames_cartridges', (object) [
             'name' => 'C', 'version' => '1.0', 'language' => 'en', 'type' => 'quiz',
             'timecreated' => $now, 'timemodified' => $now, 'uploadedby' => 0, 'active' => 1,
+        ]);
+        // The question games open only when their cartridges have a question.
+        $DB->insert_record('local_playergames_concept_questions', (object) [
+            'cartridgeid' => $cartridgeid, 'questiontext' => 'Q?', 'source' => 'manual', 'timecreated' => $now,
         ]);
         $user     = $this->getDataGenerator()->create_user();
         $renderer = $this->get_renderer();
@@ -243,6 +247,43 @@ final class widget_test extends \advanced_testcase {
         $this->assertStringNotContainsString('play_battle.php', $html);
         $this->assertStringNotContainsString('href=""', $html);
         $this->assertStringContainsString('/local/playergames/play_quiz.php', $html);
+    }
+
+    /**
+     * The shortcuts take the colours of the hub: blue to play, green when done.
+     *
+     * Regression test: every shortcut was grey, and a game done for the day only looked a little faded.
+     */
+    public function test_game_shortcuts_take_the_colours_of_the_hub(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $this->redirectEvents();
+        $seasonid = $this->make_active_season(['xp_per_game_battle' => 10, 'xp_games_battle' => 1]);
+        $now = time();
+        $cartridgeid = $DB->insert_record('local_playergames_cartridges', (object) [
+            'name' => 'C', 'version' => '1.0', 'language' => 'en', 'type' => 'quiz',
+            'timecreated' => $now, 'timemodified' => $now, 'uploadedby' => 0, 'active' => 1,
+        ]);
+        $DB->insert_record('local_playergames_concept_questions', (object) [
+            'cartridgeid' => $cartridgeid, 'questiontext' => 'Q?', 'source' => 'manual', 'timecreated' => $now,
+        ]);
+        $user = $this->getDataGenerator()->create_user();
+        daily_play_manager::register_play(
+            (int) $user->id,
+            'battle',
+            mktime(0, 0, 0),
+            $DB->get_record('local_playergames_seasons', ['id' => $seasonid], '*', MUST_EXIST),
+            \context_system::instance()
+        );
+        $renderer = $this->get_renderer();
+
+        $html = $renderer->render_from_template(
+            'block_playergames/widget',
+            (new widget((int) $user->id, false, false, 'students'))->export_for_template($renderer)
+        );
+
+        $this->assertMatchesRegularExpression('~btn-outline-primary"\s+title="PlayerQuiz"~', $html);
+        $this->assertMatchesRegularExpression('~btn-success bpg-game-done"\s+role="img"\s+title="PlayerBattle"~', $html);
     }
 
     public function test_an_administrator_sees_the_no_season_notice_even_before_any_season(): void {

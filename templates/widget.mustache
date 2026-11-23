@@ -57,7 +57,8 @@
         "str_xp": "XP",
         "str_xp_next": "XP to next level",
         "games": [
-            {"gametype": "quiz", "icon": "fa-question-circle", "name": "PlayerQuiz", "done": false, "locked": false, "pending": true, "url": "#", "str_pending": "Play"}
+            {"gametype": "quiz", "icon": "fa-question-circle", "name": "PlayerQuiz", "done": false, "locked": false, "pending": true, "url": "#", "str_pending": "Play"},
+            {"gametype": "battle", "icon": "fa-dragon", "name": "PlayerBattle", "done": true, "locked": false, "pending": false, "url": "", "str_done": "Done"}
         ],
         "streak": 5,
         "freezes": 2,
@@ -119,14 +120,14 @@
     <div class="d-flex justify-content-center gap-2 mb-1">
         {{#games}}
         {{#url}}
-        <a href="{{url}}" class="btn btn-outline-secondary btn-sm bpg-game-shortcut"
-           title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}">
+        <a href="{{url}}" class="btn btn-sm bpg-game-shortcut {{#pending}}btn-outline-primary{{/pending}}{{#lost}}btn-outline-secondary{{/lost}}"
+           title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}{{#lost}}{{str_lost}}{{/lost}}">
             <i class="fa {{icon}}" aria-hidden="true"></i>
         </a>
         {{/url}}
         {{^url}}
-        <span class="btn btn-outline-secondary btn-sm bpg-game-shortcut disabled" role="img"
-              title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}">
+        <span class="btn btn-sm bpg-game-shortcut {{#done}}btn-success bpg-game-done{{/done}}{{#locked}}btn-outline-secondary disabled{{/locked}}" role="img"
+              title="{{name}}" aria-label="{{name}}: {{#done}}{{str_done}}{{/done}}{{#pending}}{{str_pending}}{{/pending}}{{#locked}}{{str_locked}}{{/locked}}{{#lost}}{{str_lost}}{{/lost}}">
             <i class="fa {{icon}}" aria-hidden="true"></i>
         </span>
         {{/url}}
