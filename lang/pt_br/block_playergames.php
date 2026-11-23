@@ -21,8 +21,9 @@
  * @copyright  2026 Jean Lúcio
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-// phpcs:disable moodle.Files.LineLength
+
 defined('MOODLE_INTERNAL') || die();
+// phpcs:disable moodle.Files.LineLength
 
 $string['playergames:addinstance'] = 'Adicionar um novo bloco PlayerGames';
 $string['playergames:myaddinstance'] = 'Adicionar um novo bloco PlayerGames ao Painel';
