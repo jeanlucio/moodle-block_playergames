@@ -291,20 +291,16 @@ class widget implements renderable, templatable {
             'showinranking'           => (bool) $profile->showinranking,
             'hasposition'             => $selfposition > 0,
             'str_position'            => $selfposition > 0
-                ? get_string('hub_your_position', 'local_playergames', $selfposition)
-                : '',
-            'str_ranking_toggle'      => $profile->showinranking
-                ? get_string('widget_deactivate', 'block_playergames')
-                : get_string('widget_activate_ranking', 'block_playergames'),
+                ? get_string('widget_ranking_season', 'block_playergames', $selfposition)
+                : get_string('widget_ranking_season_name', 'block_playergames'),
+            'str_ranking_toggle'      => get_string('widget_show_ranking_season', 'block_playergames'),
             'learningxprankingenabled' => $learningxprankingenabled,
             'learningshowinranking'    => $learningshowinranking,
             'haslearningposition'      => $learningposition > 0,
             'str_learning_position'    => $learningposition > 0
-                ? get_string('hub_your_position', 'local_playergames', $learningposition)
-                : '',
-            'str_learning_ranking_toggle' => $learningshowinranking
-                ? get_string('widget_deactivate', 'block_playergames')
-                : get_string('widget_activate_learning_ranking', 'block_playergames'),
+                ? get_string('widget_ranking_courses', 'block_playergames', $learningposition)
+                : get_string('widget_ranking_courses_name', 'block_playergames'),
+            'str_learning_ranking_toggle' => get_string('widget_show_ranking_courses', 'block_playergames'),
         ];
     }
 }

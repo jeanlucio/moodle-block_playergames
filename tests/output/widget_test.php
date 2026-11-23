@@ -179,8 +179,9 @@ final class widget_test extends \advanced_testcase {
 
         $this->assertTrue($data['showinranking']);
         $this->assertTrue($data['hasposition']);
-        $this->assertNotSame('', $data['str_position']);
-        $this->assertSame(get_string('widget_deactivate', 'block_playergames'), $data['str_ranking_toggle']);
+        // The ranking is named beside the position, and the switch says which ranking it is about.
+        $this->assertSame(get_string('widget_ranking_season', 'block_playergames', 1), $data['str_position']);
+        $this->assertSame(get_string('widget_show_ranking_season', 'block_playergames'), $data['str_ranking_toggle']);
     }
 
     public function test_normal_state_shows_learning_position_when_opted_into_ranking(): void {
@@ -198,9 +199,9 @@ final class widget_test extends \advanced_testcase {
         $this->assertTrue($data['learningxprankingenabled']);
         $this->assertTrue($data['learningshowinranking']);
         $this->assertTrue($data['haslearningposition']);
-        $this->assertNotSame('', $data['str_learning_position']);
+        $this->assertSame(get_string('widget_ranking_courses', 'block_playergames', 1), $data['str_learning_position']);
         $this->assertSame(
-            get_string('widget_deactivate', 'block_playergames'),
+            get_string('widget_show_ranking_courses', 'block_playergames'),
             $data['str_learning_ranking_toggle']
         );
     }
