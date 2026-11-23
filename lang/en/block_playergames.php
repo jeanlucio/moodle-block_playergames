@@ -23,7 +23,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-// phpcs:disable moodle.Files.LineLength
 
 $string['playergames:addinstance'] = 'Add a new PlayerGames block';
 $string['playergames:myaddinstance'] = 'Add a new PlayerGames block to the Dashboard';

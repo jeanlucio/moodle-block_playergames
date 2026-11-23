@@ -23,7 +23,6 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-// phpcs:disable moodle.Files.LineLength
 
 $string['playergames:addinstance'] = 'Adicionar um novo bloco PlayerGames';
 $string['playergames:myaddinstance'] = 'Adicionar um novo bloco PlayerGames ao Painel';
